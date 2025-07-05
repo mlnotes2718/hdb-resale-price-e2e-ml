@@ -1,0 +1,31 @@
+#######################################################################################
+####
+#### User Guide on Configuration 
+####
+#######################################################################################
+
+# Location of data file
+file_path: './data/resale_transactions.csv'
+
+## Training and Testing Dataset Configuration
+# Specify the target column
+target_column: resale_price
+
+# Specify the percentage of data reserve for testing
+val_test_size: 0.2
+
+# Specify the percentage of data reserve for validation
+val_size: 0.5
+
+## Features Classification
+numerical_features:
+  - floor_area_sqm
+  - remaining_lease_by_months
+  - transac_year
+nominal_features:
+  - transac_month
+  - town_name
+  - flatm_name
+  - flat_type
+passthrough_features:
+  - storey_range
