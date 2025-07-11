@@ -5,6 +5,7 @@ from typing import Any, Dict, Tuple
 # Related third-party imports
 import pandas as pd
 from sklearn.compose import ColumnTransformer
+from sklearn.linear_model import LinearRegression, Ridge
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.ensemble import RandomForestRegressor
 import xgboost as xgb
@@ -101,11 +102,15 @@ class ModelTraining:
         Tuple[Dict[str, Pipeline], Dict[str, Dict[str, float]]]: A tuple containing the trained pipelines and their evaluation metrics.
         """
         logging.info("Training and evaluating baseline models.")
+        # models = {
+        #     "Decision_Tree_Baseline": DecisionTreeRegressor(),
+        #     "Random_Forest_Baseline": RandomForestRegressor(n_jobs=-1),
+        #     "XGBoost_Baseline": xgb.XGBRegressor(),
+        #     "LightGBM_Baseline": lgb.LGBMRegressor(),
+        # }
         models = {
-            "Decision_Tree_Baseline": DecisionTreeRegressor(),
-            "Random_Forest_Baseline": RandomForestRegressor(n_jobs=-1),
-            "XGBoost_Baseline": xgb.XGBRegressor(),
-            "LightGBM_Baseline": lgb.LGBMRegressor(),
+            "Linear_Regression_Baseline": LinearRegression(),
+            "Ridge_Regression_Baseline": Ridge(alpha=1.0, solver='auto'),
         }
         pipelines = {}
         metrics = {}
@@ -144,7 +149,7 @@ class ModelTraining:
         --------
         Tuple[Dict[str, Pipeline], Dict[str, Dict[str, float]]]: A tuple containing the tuned pipelines and their evaluation metrics.
         """
-        logging.info("Starting hyperparameter tuning.")
+        logging.info("!!! Starting hyperparameter tuning.")
         tuned_models = {}
         tuned_metrics = {}
 

@@ -1,0 +1,31 @@
+name: Run ML Process on Trigger
+
+on:
+  #push: # use in production stage
+  #  branches:
+  #    - main  # Adjust if you want to trigger on different branches
+  workflow_dispatch:  # Enables manual triggering from GitHub UI
+  #schedule:
+  #  - cron: '0 15 * * 2'  # Runs every Tuesday at 3pm UTC (11pm SG time)
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'  # Adjust as needed
+      
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      - name: Run Script and Capture Logs
+        run: python main.py 2>&1
+      

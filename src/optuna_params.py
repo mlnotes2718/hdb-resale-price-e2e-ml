@@ -1,7 +1,8 @@
 # config.py
-from optuna.distributions import FloatDistribution, IntDistribution
+from optuna.distributions import FloatDistribution, IntDistribution, CategoricalDistribution
 import xgboost as xgb
 import lightgbm as lgb
+from sklearn.linear_model import LinearRegression, Ridge
 
 ## Optuna Grid Search CV
 params_config = {
@@ -39,4 +40,30 @@ params_config = {
             "trials": 30,
             "scoring": "neg_mean_absolute_error",
         },
+}
+
+# Optuna Grid Search CV for Linear Regression
+params_config_linear = {
+    "Linear_Regression_tuned": {
+        "estimator": LinearRegression(),
+        "param_distributions": {
+            "preprocessor__num__poly__degree": IntDistribution(low=1, high=3),
+            "regressor__fit_intercept": CategoricalDistribution([True, False]),
+        },
+        "cv": 5,
+        "trials": 10,
+        "scoring": "neg_mean_absolute_error",
+    },
+    "Ridge_Regression_tuned": {
+        "estimator": Ridge(),
+        "param_distributions": {
+            "preprocessor__num__poly__degree": IntDistribution(low=1, high=3),
+            "regressor__fit_intercept": CategoricalDistribution([True, False]),
+            "regressor__alpha": FloatDistribution(low=0.001, high=100.0, log=True),
+            "regressor__solver": CategoricalDistribution(["auto", "svd", "cholesky", "lsqr", "sparse_cg"]),
+        },
+        "cv": 5,
+        "trials": 10,
+        "scoring": "neg_mean_absolute_error",
+    },
 }

@@ -86,12 +86,28 @@ class DataPreparation:
         --------
         sklearn.compose.ColumnTransformer: A ColumnTransformer object for preprocessing the data.
         """
+        
+        # Define the numerical transformer
+        # This transformer will handle numerical features using StandardScaler
+        numerical_transformer = Pipeline(
+            steps=[("scaler", StandardScaler()), 
+                   ("poly", PolynomialFeatures(degree=2, include_bias=False))]
+        )
+        
+        # Define the nominal transformer
+        # This transformer will handle nominal features using OneHotEncoder
         nominal_transformer = Pipeline(
             steps=[("onehot", OneHotEncoder(handle_unknown="ignore"))]
         )
+
+        # Create the ColumnTransformer
+        # This ColumnTransformer will apply the numerical and nominal transformers to their respective feature sets
+        # and passthrough any features not specified in the transformers
+        # The `remainder` parameter is set to "passthrough" to keep any features not specified in the transformers
+        # The `n_jobs` parameter is set to -1 to use all available CPU cores for parallel processing
         preprocessor = ColumnTransformer(
             transformers=[
-                ("num", "passthrough", self.config["numerical_features"]),
+                ("num", numerical_transformer, self.config["numerical_features"]),
                 ("nom", nominal_transformer, self.config["nominal_features"]),
                 ("pass", "passthrough", self.config["passthrough_features"]),
             ],

@@ -14,6 +14,7 @@ from sklearn.utils._testing import ignore_warnings
 from src.data_preparation import DataPreparation
 from src.model_training import ModelTraining
 from src.optuna_params import params_config
+from src.optuna_params import params_config_linear
 
 logging.basicConfig(level=logging.INFO)
 
@@ -76,7 +77,7 @@ def main():
     # Train and evaluate tuned models with hyperparameter tuning
     try:
         tuned_models, tuned_metrics = model_training.train_and_evaluate_tuned_models(
-            X_train, y_train, X_val, y_val, params_config=params_config
+            X_train, y_train, X_val, y_val, params_config=params_config_linear
         )
     except Exception as e:
         logging.info(f'Exception (hyperparameter tuning): {e}')   
@@ -94,6 +95,7 @@ def main():
     final_metrics = model_training.evaluate_final_model(
         best_model, X_test, y_test, best_model_name
     )
+    logging.info(f"Final Test Metrics: {final_metrics}")
 
     # Save model to joblib file
     # Define the filename
