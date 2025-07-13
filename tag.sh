@@ -1,7 +1,7 @@
-export VERSION=v0.1.1
+export VERSION=v0.1.2
 
 # 1. Update the file (search/replace version string)
-sed -i '' -E 's/^version = ".*"/version = "'"$VERSION"'"/' pyproject.toml
+sed -i '' -E 's/^version = ".+"/version = "'"$VERSION"'"/' pyproject.toml
 
 # 2. Stage it
 git add pyproject.toml               # ← critical line
