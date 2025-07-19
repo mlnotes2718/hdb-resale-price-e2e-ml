@@ -14,3 +14,4 @@ pytest==8.4.1
 pytest-cov==6.0.0
 statsmodels==0.14.4
 catboost==1.2.8
+scikit-posthocs==0.11.4
