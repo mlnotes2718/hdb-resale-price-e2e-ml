@@ -74,7 +74,7 @@ class DataPreparation:
         df['remaining_lease_by_months'] = df.remaining_lease.apply(self._convert_lease_to_month)
 
         # Dropping columns
-        df.drop(columns=['month', 'block', 'street_name', 'remaining_lease', 'year_month', 'lease_commence_date'], inplace=True)
+        df.drop(columns=['block', 'street_name', 'remaining_lease', 'lease_commence_date'], inplace=True)
         return df
 
     # Create Preprocessor Method
